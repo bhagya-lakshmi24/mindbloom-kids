@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Award, Brain, Check, Puzzle, Timer, Wind } from "lucide-react";
+import { Award, Brain, Check, Palette, Puzzle, Search, Sparkles, Timer, Wind } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -41,7 +41,10 @@ function Activities() {
       <section className="mx-auto max-w-6xl px-5 py-16">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {activities.map((a) => (
-            <article key={a.title} className="card-soft p-6">
+            <article
+              key={a.title}
+              className="card-soft p-6 transition-transform duration-200 hover:-translate-y-1"
+            >
               <span className="flex size-11 items-center justify-center rounded-2xl bg-grass-soft text-grass">
                 <a.icon className="size-5" />
               </span>
@@ -51,6 +54,8 @@ function Activities() {
           ))}
         </div>
 
+        <MindGames />
+
         <div className="mt-8 grid gap-5 lg:grid-cols-3">
           <FocusTimer />
           <HabitTracker />
@@ -58,6 +63,209 @@ function Activities() {
         </div>
       </section>
     </>
+  );
+}
+
+const games = [
+  {
+    id: "color",
+    label: "Color Match",
+    icon: Palette,
+    tab: "bg-sky-soft text-sky",
+    tabActive: "bg-sky text-primary-foreground",
+  },
+  {
+    id: "memory",
+    label: "Number Memory",
+    icon: Sparkles,
+    tab: "bg-sunny-soft text-primary",
+    tabActive: "bg-sunny text-accent-foreground",
+  },
+  {
+    id: "odd",
+    label: "Odd One Out",
+    icon: Search,
+    tab: "bg-grass-soft text-grass",
+    tabActive: "bg-grass text-primary-foreground",
+  },
+] as const;
+
+function MindGames() {
+  const [tab, setTab] = useState<(typeof games)[number]["id"]>("color");
+
+  return (
+    <div className="mt-8">
+      <h2 className="text-2xl font-extrabold">More mind games</h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Pick a tab and play a quick round — each one trains a different thinking muscle.
+      </p>
+      <div className="mt-5 flex flex-wrap gap-3">
+        {games.map((g) => {
+          const active = tab === g.id;
+          return (
+            <button
+              key={g.id}
+              type="button"
+              onClick={() => setTab(g.id)}
+              className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-200 hover:-translate-y-1 ${
+                active ? `${g.tabActive} -translate-y-1 shadow-md` : g.tab
+              }`}
+            >
+              <g.icon className="size-4" />
+              {g.label}
+            </button>
+          );
+        })}
+      </div>
+      <div key={tab} className="card-soft mt-5 animate-fade-in p-6">
+        {tab === "color" && <ColorMatch />}
+        {tab === "memory" && <NumberMemory />}
+        {tab === "odd" && <OddOneOut />}
+      </div>
+    </div>
+  );
+}
+
+const colorWords = [
+  { word: "BLUE", className: "text-sky" },
+  { word: "GREEN", className: "text-grass" },
+  { word: "ORANGE", className: "text-primary" },
+];
+
+function ColorMatch() {
+  const [round, setRound] = useState({ w: 0, c: 1 });
+  const [score, setScore] = useState(0);
+  const [msg, setMsg] = useState("Does the word match its color?");
+
+  const next = () =>
+    setRound({
+      w: Math.floor(Math.random() * colorWords.length),
+      c: Math.floor(Math.random() * colorWords.length),
+    });
+
+  const answer = (yes: boolean) => {
+    const correct = (round.w === round.c) === yes;
+    setScore((s) => (correct ? s + 1 : s));
+    setMsg(correct ? "Nice spotting! ⭐" : "Not quite — try the next one.");
+    next();
+  };
+
+  return (
+    <div className="text-center">
+      <p className="text-sm text-muted-foreground">{msg}</p>
+      <p className={`mt-6 font-display text-6xl font-extrabold ${colorWords[round.c]!.className}`}>
+        {colorWords[round.w]!.word}
+      </p>
+      <div className="mt-6 flex justify-center gap-3">
+        <Button className="rounded-full font-bold" onClick={() => answer(true)}>
+          Match
+        </Button>
+        <Button variant="secondary" className="rounded-full font-bold" onClick={() => answer(false)}>
+          No match
+        </Button>
+      </div>
+      <p className="mt-4 text-sm font-bold">Score: {score}</p>
+    </div>
+  );
+}
+
+function NumberMemory() {
+  const [digits, setDigits] = useState("");
+  const [phase, setPhase] = useState<"idle" | "show" | "input" | "done">("idle");
+  const [guess, setGuess] = useState("");
+  const [level, setLevel] = useState(3);
+  const [msg, setMsg] = useState("Remember the number, then type it back.");
+
+  useEffect(() => {
+    if (phase !== "show") return;
+    const id = setTimeout(() => setPhase("input"), 2500);
+    return () => clearTimeout(id);
+  }, [phase]);
+
+  const start = (len: number) => {
+    setDigits(
+      Array.from({ length: len }, () => Math.floor(Math.random() * 10)).join(""),
+    );
+    setGuess("");
+    setPhase("show");
+  };
+
+  return (
+    <div className="text-center">
+      <p className="text-sm text-muted-foreground">{msg}</p>
+      <div className="mt-6 flex min-h-20 items-center justify-center">
+        {phase === "show" ? (
+          <p className="font-display text-5xl font-extrabold tracking-widest text-sky">{digits}</p>
+        ) : phase === "input" ? (
+          <input
+            value={guess}
+            onChange={(e) => setGuess(e.target.value)}
+            inputMode="numeric"
+            className="w-48 rounded-xl border border-border bg-background px-4 py-3 text-center font-display text-2xl font-bold tracking-widest"
+            placeholder="Type it"
+          />
+        ) : (
+          <p className="font-display text-3xl font-extrabold text-muted-foreground">Level {level}</p>
+        )}
+      </div>
+      <div className="mt-6 flex justify-center gap-3">
+        {phase === "input" ? (
+          <Button
+            className="rounded-full font-bold"
+            onClick={() => {
+              const ok = guess.trim() === digits;
+              setMsg(ok ? "Perfect recall! ⭐" : `Close — it was ${digits}.`);
+              setLevel((l) => (ok ? Math.min(l + 1, 9) : Math.max(3, l - 1)));
+              setPhase("idle");
+            }}
+          >
+            Check
+          </Button>
+        ) : (
+          <Button className="rounded-full font-bold" onClick={() => start(level)}>
+            {phase === "idle" ? "Start round" : "Watching…"}
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const oddRounds = [
+  { items: ["🍎", "🍌", "🍇", "🚗"], answer: 3 },
+  { items: ["🐶", "🐱", "🌳", "🐰"], answer: 2 },
+  { items: ["⚽", "🏀", "🎾", "📚"], answer: 3 },
+  { items: ["🚂", "✈️", "🚀", "🥕"], answer: 3 },
+];
+
+function OddOneOut() {
+  const [i, setI] = useState(0);
+  const [score, setScore] = useState(0);
+  const [msg, setMsg] = useState("Tap the one that does not belong.");
+  const round = oddRounds[i % oddRounds.length]!;
+
+  return (
+    <div className="text-center">
+      <p className="text-sm text-muted-foreground">{msg}</p>
+      <div className="mt-6 grid grid-cols-4 gap-3">
+        {round.items.map((item, idx) => (
+          <button
+            key={item}
+            type="button"
+            onClick={() => {
+              const ok = idx === round.answer;
+              setScore((s) => (ok ? s + 1 : s));
+              setMsg(ok ? "Great thinking! ⭐" : "Look again next round.");
+              setI((v) => v + 1);
+            }}
+            className="rounded-2xl bg-grass-soft py-6 text-3xl transition-transform duration-200 hover:-translate-y-1"
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+      <p className="mt-4 text-sm font-bold">Score: {score}</p>
+    </div>
   );
 }
 
