@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ActivitiesRouteImport } from './routes/activities'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ParentCornerRouteImport } from './routes/parent-corner'
 import { Route as ServicesRouteImport } from './routes/services'
@@ -30,6 +31,11 @@ const AboutRoute = AboutRouteImport.update({
 const ActivitiesRoute = ActivitiesRouteImport.update({
   id: '/activities',
   path: '/activities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/parent-corner': typeof ParentCornerRoute
   '/services': typeof ServicesRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/parent-corner': typeof ParentCornerRoute
   '/services': typeof ServicesRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/parent-corner': typeof ParentCornerRoute
   '/services': typeof ServicesRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/activities'
+    | '/auth'
     | '/contact'
     | '/parent-corner'
     | '/services'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/activities'
+    | '/auth'
     | '/contact'
     | '/parent-corner'
     | '/services'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/activities'
+    | '/auth'
     | '/contact'
     | '/parent-corner'
     | '/services'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ActivitiesRoute: typeof ActivitiesRoute
+  AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   ParentCornerRoute: typeof ParentCornerRoute
   ServicesRoute: typeof ServicesRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/activities'
       fullPath: '/activities'
       preLoaderRoute: typeof ActivitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ActivitiesRoute: ActivitiesRoute,
+  AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   ParentCornerRoute: ParentCornerRoute,
   ServicesRoute: ServicesRoute,
