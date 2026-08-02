@@ -1,7 +1,9 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, Sparkles, X } from "lucide-react";
+import { LogIn, LogOut, Menu, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSession } from "@/hooks/useSession";
+import { supabase } from "@/integrations/supabase/client";
 
 const links = [
   { to: "/", label: "Home" },
@@ -15,6 +17,14 @@ const links = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { user } = useSession();
+  const navigate = useNavigate();
+
+  async function signOut() {
+    await supabase.auth.signOut();
+    setOpen(false);
+    navigate({ to: "/", replace: true });
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">
@@ -45,9 +55,27 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Button asChild size="sm" className="ml-auto rounded-full font-bold lg:ml-2">
-          <Link to="/contact">Book Free Consultation</Link>
-        </Button>
+        <div className="ml-auto flex items-center gap-2 lg:ml-2">
+          {user ? (
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={signOut}
+              className="rounded-full font-bold"
+            >
+              <LogOut className="size-4" /> Sign out
+            </Button>
+          ) : (
+            <Button asChild size="sm" variant="secondary" className="rounded-full font-bold">
+              <Link to="/auth">
+                <LogIn className="size-4" /> Login
+              </Link>
+            </Button>
+          )}
+          <Button asChild size="sm" className="hidden rounded-full font-bold sm:inline-flex">
+            <Link to="/contact">Book Free Consultation</Link>
+          </Button>
+        </div>
 
         <button
           type="button"
