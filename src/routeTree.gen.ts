@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ParentCornerRouteImport } from './routes/parent-corner'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -37,6 +38,11 @@ const ActivitiesRoute = ActivitiesRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingsRoute = BookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/auth': typeof AuthRoute
+  '/bookings': typeof BookingsRoute
   '/contact': typeof ContactRoute
   '/parent-corner': typeof ParentCornerRoute
   '/profile': typeof ProfileRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/auth': typeof AuthRoute
+  '/bookings': typeof BookingsRoute
   '/contact': typeof ContactRoute
   '/parent-corner': typeof ParentCornerRoute
   '/profile': typeof ProfileRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/auth': typeof AuthRoute
+  '/bookings': typeof BookingsRoute
   '/contact': typeof ContactRoute
   '/parent-corner': typeof ParentCornerRoute
   '/profile': typeof ProfileRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/activities'
     | '/auth'
+    | '/bookings'
     | '/contact'
     | '/parent-corner'
     | '/profile'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/activities'
     | '/auth'
+    | '/bookings'
     | '/contact'
     | '/parent-corner'
     | '/profile'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/activities'
     | '/auth'
+    | '/bookings'
     | '/contact'
     | '/parent-corner'
     | '/profile'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ActivitiesRoute: typeof ActivitiesRoute
   AuthRoute: typeof AuthRoute
+  BookingsRoute: typeof BookingsRoute
   ContactRoute: typeof ContactRoute
   ParentCornerRoute: typeof ParentCornerRoute
   ProfileRoute: typeof ProfileRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bookings': {
+      id: '/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof BookingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ActivitiesRoute: ActivitiesRoute,
   AuthRoute: AuthRoute,
+  BookingsRoute: BookingsRoute,
   ContactRoute: ContactRoute,
   ParentCornerRoute: ParentCornerRoute,
   ProfileRoute: ProfileRoute,
