@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/components/AuthProvider";
 import { lovable } from "@/integrations/lovable/index";
 import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
