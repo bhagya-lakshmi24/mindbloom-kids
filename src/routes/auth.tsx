@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/components/AuthProvider";
 import { lovable } from "@/integrations/lovable/index";
 import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
@@ -37,11 +38,11 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
+  const { user, loading } = useAuth();
+
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/", replace: true });
-    });
-  }, [navigate]);
+    if (!loading && user) navigate({ to: "/", replace: true });
+  }, [loading, user, navigate]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -53,13 +54,19 @@ function AuthPage() {
     setBusy(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email: parsed.data.email,
           password: parsed.data.password,
           options: { emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
-        toast.success("Account created! Check your email to confirm your address.");
+        toast.success("Account created successfully!");
+        if (data.session) {
+          navigate({ to: "/", replace: true });
+        } else {
+          toast.info("Check your email to confirm your address, then sign in.");
+          setMode("signin");
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email: parsed.data.email,
