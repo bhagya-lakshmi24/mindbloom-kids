@@ -18,6 +18,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ParentCornerRouteImport } from './routes/parent-corner'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ShopRouteImport } from './routes/shop'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +66,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/parent-corner': typeof ParentCornerRoute
   '/profile': typeof ProfileRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/shop': typeof ShopRoute
 }
 export interface FileRoutesByTo {
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/parent-corner': typeof ParentCornerRoute
   '/profile': typeof ProfileRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/shop': typeof ShopRoute
 }
 export interface FileRoutesById {
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/parent-corner': typeof ParentCornerRoute
   '/profile': typeof ProfileRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/shop': typeof ShopRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/parent-corner'
     | '/profile'
     | '/services'
+    | '/settings'
     | '/shop'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/parent-corner'
     | '/profile'
     | '/services'
+    | '/settings'
     | '/shop'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/parent-corner'
     | '/profile'
     | '/services'
+    | '/settings'
     | '/shop'
   fileRoutesById: FileRoutesById
 }
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   ParentCornerRoute: typeof ParentCornerRoute
   ProfileRoute: typeof ProfileRoute
   ServicesRoute: typeof ServicesRoute
+  SettingsRoute: typeof SettingsRoute
   ShopRoute: typeof ShopRoute
 }
 
@@ -225,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   ParentCornerRoute: ParentCornerRoute,
   ProfileRoute: ProfileRoute,
   ServicesRoute: ServicesRoute,
+  SettingsRoute: SettingsRoute,
   ShopRoute: ShopRoute,
 }
 export const routeTree = rootRouteImport
