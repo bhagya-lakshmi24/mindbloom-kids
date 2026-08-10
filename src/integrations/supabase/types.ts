@@ -14,16 +14,368 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          activity_key: string
+          activity_type: string
+          child_id: string
+          completed_at: string
+          created_at: string
+          duration_seconds: number | null
+          id: string
+          score: number | null
+        }
+        Insert: {
+          activity_key: string
+          activity_type: string
+          child_id: string
+          completed_at?: string
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          score?: number | null
+        }
+        Update: {
+          activity_key?: string
+          activity_type?: string
+          child_id?: string
+          completed_at?: string
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_logs_child_id_fkey"
+            columns: ["child_id"]
+            isOneToOne: false
+            referencedRelation: "children"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bookings: {
+        Row: {
+          contact_email: string
+          contact_name: string
+          contact_phone: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          parent_id: string
+          preferred_date: string | null
+          price_inr: number | null
+          service_name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          contact_email: string
+          contact_name: string
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          parent_id: string
+          preferred_date?: string | null
+          price_inr?: number | null
+          service_name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          contact_email?: string
+          contact_name?: string
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          parent_id?: string
+          preferred_date?: string | null
+          price_inr?: number | null
+          service_name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      children: {
+        Row: {
+          age_group: string
+          avatar: string
+          created_at: string
+          id: string
+          nickname: string
+          parent_id: string
+          preferences: Json
+          updated_at: string
+        }
+        Insert: {
+          age_group: string
+          avatar?: string
+          created_at?: string
+          id?: string
+          nickname: string
+          parent_id: string
+          preferences?: Json
+          updated_at?: string
+        }
+        Update: {
+          age_group?: string
+          avatar?: string
+          created_at?: string
+          id?: string
+          nickname?: string
+          parent_id?: string
+          preferences?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      mood_checkins: {
+        Row: {
+          checked_in_at: string
+          child_id: string
+          created_at: string
+          id: string
+          mood: string
+          note: string | null
+        }
+        Insert: {
+          checked_in_at?: string
+          child_id: string
+          created_at?: string
+          id?: string
+          mood: string
+          note?: string | null
+        }
+        Update: {
+          checked_in_at?: string
+          child_id?: string
+          created_at?: string
+          id?: string
+          mood?: string
+          note?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mood_checkins_child_id_fkey"
+            columns: ["child_id"]
+            isOneToOne: false
+            referencedRelation: "children"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      parental_consents: {
+        Row: {
+          agreed: boolean
+          agreed_at: string
+          child_id: string | null
+          consent_type: string
+          created_at: string
+          id: string
+          parent_id: string
+        }
+        Insert: {
+          agreed?: boolean
+          agreed_at?: string
+          child_id?: string | null
+          consent_type: string
+          created_at?: string
+          id?: string
+          parent_id: string
+        }
+        Update: {
+          agreed?: boolean
+          agreed_at?: string
+          child_id?: string | null
+          consent_type?: string
+          created_at?: string
+          id?: string
+          parent_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parental_consents_child_id_fkey"
+            columns: ["child_id"]
+            isOneToOne: false
+            referencedRelation: "children"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      rewards: {
+        Row: {
+          badge_key: string
+          child_id: string
+          earned_at: string
+          id: string
+          label: string
+        }
+        Insert: {
+          badge_key: string
+          child_id: string
+          earned_at?: string
+          id?: string
+          label: string
+        }
+        Update: {
+          badge_key?: string
+          child_id?: string
+          earned_at?: string
+          id?: string
+          label?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rewards_child_id_fkey"
+            columns: ["child_id"]
+            isOneToOne: false
+            referencedRelation: "children"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      routine_completions: {
+        Row: {
+          child_id: string
+          completed_on: string
+          created_at: string
+          id: string
+          task_id: string
+        }
+        Insert: {
+          child_id: string
+          completed_on?: string
+          created_at?: string
+          id?: string
+          task_id: string
+        }
+        Update: {
+          child_id?: string
+          completed_on?: string
+          created_at?: string
+          id?: string
+          task_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "routine_completions_child_id_fkey"
+            columns: ["child_id"]
+            isOneToOne: false
+            referencedRelation: "children"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "routine_completions_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "routine_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      routine_tasks: {
+        Row: {
+          child_id: string
+          created_at: string
+          emoji: string
+          id: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          child_id: string
+          created_at?: string
+          emoji?: string
+          id?: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          child_id?: string
+          created_at?: string
+          emoji?: string
+          id?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "routine_tasks_child_id_fkey"
+            columns: ["child_id"]
+            isOneToOne: false
+            referencedRelation: "children"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      owns_child: { Args: { _child_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "parent"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +502,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "parent"],
+    },
   },
 } as const
