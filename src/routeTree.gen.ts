@@ -16,6 +16,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as ChildSafetyRouteImport } from './routes/child-safety'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as KidsRouteImport } from './routes/kids'
 import { Route as ParentRouteImport } from './routes/parent'
 import { Route as ParentConsentRouteImport } from './routes/parent-consent'
 import { Route as ParentCornerRouteImport } from './routes/parent-corner'
@@ -60,6 +61,11 @@ const ChildSafetyRoute = ChildSafetyRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KidsRoute = KidsRouteImport.update({
+  id: '/kids',
+  path: '/kids',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ParentRoute = ParentRouteImport.update({
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/bookings': typeof BookingsRoute
   '/child-safety': typeof ChildSafetyRoute
   '/contact': typeof ContactRoute
+  '/kids': typeof KidsRoute
   '/parent': typeof ParentRoute
   '/parent-consent': typeof ParentConsentRoute
   '/parent-corner': typeof ParentCornerRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/bookings': typeof BookingsRoute
   '/child-safety': typeof ChildSafetyRoute
   '/contact': typeof ContactRoute
+  '/kids': typeof KidsRoute
   '/parent': typeof ParentRoute
   '/parent-consent': typeof ParentConsentRoute
   '/parent-corner': typeof ParentCornerRoute
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/bookings': typeof BookingsRoute
   '/child-safety': typeof ChildSafetyRoute
   '/contact': typeof ContactRoute
+  '/kids': typeof KidsRoute
   '/parent': typeof ParentRoute
   '/parent-consent': typeof ParentConsentRoute
   '/parent-corner': typeof ParentCornerRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/bookings'
     | '/child-safety'
     | '/contact'
+    | '/kids'
     | '/parent'
     | '/parent-consent'
     | '/parent-corner'
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/bookings'
     | '/child-safety'
     | '/contact'
+    | '/kids'
     | '/parent'
     | '/parent-consent'
     | '/parent-corner'
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/bookings'
     | '/child-safety'
     | '/contact'
+    | '/kids'
     | '/parent'
     | '/parent-consent'
     | '/parent-corner'
@@ -239,6 +251,7 @@ export interface RootRouteChildren {
   BookingsRoute: typeof BookingsRoute
   ChildSafetyRoute: typeof ChildSafetyRoute
   ContactRoute: typeof ContactRoute
+  KidsRoute: typeof KidsRoute
   ParentRoute: typeof ParentRoute
   ParentConsentRoute: typeof ParentConsentRoute
   ParentCornerRoute: typeof ParentCornerRoute
@@ -300,6 +313,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kids': {
+      id: '/kids'
+      path: '/kids'
+      fullPath: '/kids'
+      preLoaderRoute: typeof KidsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parent': {
@@ -383,6 +403,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookingsRoute: BookingsRoute,
   ChildSafetyRoute: ChildSafetyRoute,
   ContactRoute: ContactRoute,
+  KidsRoute: KidsRoute,
   ParentRoute: ParentRoute,
   ParentConsentRoute: ParentConsentRoute,
   ParentCornerRoute: ParentCornerRoute,
@@ -397,3 +418,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
