@@ -112,6 +112,11 @@ export function SiteHeader() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
+                  <Link to="/parent">
+                    <Sparkles className="size-4" /> Parent Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link to="/bookings">
                     <CalendarCheck className="size-4" /> My Bookings
                   </Link>
