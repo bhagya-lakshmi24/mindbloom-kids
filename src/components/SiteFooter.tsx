@@ -28,6 +28,21 @@ export function SiteFooter() {
               <Link to="/shop">Shop</Link>
             </li>
           </ul>
+          <h4 className="mt-4 font-bold">Safety &amp; Legal</h4>
+          <ul className="mt-2 grid gap-1 text-muted-foreground">
+            <li>
+              <Link to="/child-safety">Child Safety &amp; Trust</Link>
+            </li>
+            <li>
+              <Link to="/parent-consent">Parent Consent</Link>
+            </li>
+            <li>
+              <Link to="/privacy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link to="/terms">Terms of Use</Link>
+            </li>
+          </ul>
         </div>
         <div className="text-sm">
           <h4 className="font-bold">Reach us</h4>

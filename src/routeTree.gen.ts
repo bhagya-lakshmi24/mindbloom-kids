@@ -14,12 +14,19 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookingsRouteImport } from './routes/bookings'
+import { Route as ChildSafetyRouteImport } from './routes/child-safety'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as KidsRouteImport } from './routes/kids'
+import { Route as ParentRouteImport } from './routes/parent'
+import { Route as ParentConsentRouteImport } from './routes/parent-consent'
 import { Route as ParentCornerRouteImport } from './routes/parent-corner'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as TermsRouteImport } from './routes/terms'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,9 +53,29 @@ const BookingsRoute = BookingsRouteImport.update({
   path: '/bookings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChildSafetyRoute = ChildSafetyRouteImport.update({
+  id: '/child-safety',
+  path: '/child-safety',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KidsRoute = KidsRouteImport.update({
+  id: '/kids',
+  path: '/kids',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParentRoute = ParentRouteImport.update({
+  id: '/parent',
+  path: '/parent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParentConsentRoute = ParentConsentRouteImport.update({
+  id: '/parent-consent',
+  path: '/parent-consent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ParentCornerRoute = ParentCornerRouteImport.update({
@@ -56,9 +83,19 @@ const ParentCornerRoute = ParentCornerRouteImport.update({
   path: '/parent-corner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -76,6 +113,11 @@ const ShopRoute = ShopRouteImport.update({
   path: '/shop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -83,12 +125,19 @@ export interface FileRoutesByFullPath {
   '/activities': typeof ActivitiesRoute
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
+  '/child-safety': typeof ChildSafetyRoute
   '/contact': typeof ContactRoute
+  '/kids': typeof KidsRoute
+  '/parent': typeof ParentRoute
+  '/parent-consent': typeof ParentConsentRoute
   '/parent-corner': typeof ParentCornerRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
   '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -96,12 +145,19 @@ export interface FileRoutesByTo {
   '/activities': typeof ActivitiesRoute
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
+  '/child-safety': typeof ChildSafetyRoute
   '/contact': typeof ContactRoute
+  '/kids': typeof KidsRoute
+  '/parent': typeof ParentRoute
+  '/parent-consent': typeof ParentConsentRoute
   '/parent-corner': typeof ParentCornerRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
   '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -110,12 +166,19 @@ export interface FileRoutesById {
   '/activities': typeof ActivitiesRoute
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
+  '/child-safety': typeof ChildSafetyRoute
   '/contact': typeof ContactRoute
+  '/kids': typeof KidsRoute
+  '/parent': typeof ParentRoute
+  '/parent-consent': typeof ParentConsentRoute
   '/parent-corner': typeof ParentCornerRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
   '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,12 +188,19 @@ export interface FileRouteTypes {
     | '/activities'
     | '/auth'
     | '/bookings'
+    | '/child-safety'
     | '/contact'
+    | '/kids'
+    | '/parent'
+    | '/parent-consent'
     | '/parent-corner'
+    | '/privacy'
     | '/profile'
+    | '/reset-password'
     | '/services'
     | '/settings'
     | '/shop'
+    | '/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -138,12 +208,19 @@ export interface FileRouteTypes {
     | '/activities'
     | '/auth'
     | '/bookings'
+    | '/child-safety'
     | '/contact'
+    | '/kids'
+    | '/parent'
+    | '/parent-consent'
     | '/parent-corner'
+    | '/privacy'
     | '/profile'
+    | '/reset-password'
     | '/services'
     | '/settings'
     | '/shop'
+    | '/terms'
   id:
     | '__root__'
     | '/'
@@ -151,12 +228,19 @@ export interface FileRouteTypes {
     | '/activities'
     | '/auth'
     | '/bookings'
+    | '/child-safety'
     | '/contact'
+    | '/kids'
+    | '/parent'
+    | '/parent-consent'
     | '/parent-corner'
+    | '/privacy'
     | '/profile'
+    | '/reset-password'
     | '/services'
     | '/settings'
     | '/shop'
+    | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -165,12 +249,19 @@ export interface RootRouteChildren {
   ActivitiesRoute: typeof ActivitiesRoute
   AuthRoute: typeof AuthRoute
   BookingsRoute: typeof BookingsRoute
+  ChildSafetyRoute: typeof ChildSafetyRoute
   ContactRoute: typeof ContactRoute
+  KidsRoute: typeof KidsRoute
+  ParentRoute: typeof ParentRoute
+  ParentConsentRoute: typeof ParentConsentRoute
   ParentCornerRoute: typeof ParentCornerRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ServicesRoute: typeof ServicesRoute
   SettingsRoute: typeof SettingsRoute
   ShopRoute: typeof ShopRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -210,11 +301,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/child-safety': {
+      id: '/child-safety'
+      path: '/child-safety'
+      fullPath: '/child-safety'
+      preLoaderRoute: typeof ChildSafetyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kids': {
+      id: '/kids'
+      path: '/kids'
+      fullPath: '/kids'
+      preLoaderRoute: typeof KidsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parent': {
+      id: '/parent'
+      path: '/parent'
+      fullPath: '/parent'
+      preLoaderRoute: typeof ParentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parent-consent': {
+      id: '/parent-consent'
+      path: '/parent-consent'
+      fullPath: '/parent-consent'
+      preLoaderRoute: typeof ParentConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parent-corner': {
@@ -224,11 +343,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ParentCornerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -252,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -261,12 +401,19 @@ const rootRouteChildren: RootRouteChildren = {
   ActivitiesRoute: ActivitiesRoute,
   AuthRoute: AuthRoute,
   BookingsRoute: BookingsRoute,
+  ChildSafetyRoute: ChildSafetyRoute,
   ContactRoute: ContactRoute,
+  KidsRoute: KidsRoute,
+  ParentRoute: ParentRoute,
+  ParentConsentRoute: ParentConsentRoute,
   ParentCornerRoute: ParentCornerRoute,
+  PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ServicesRoute: ServicesRoute,
   SettingsRoute: SettingsRoute,
   ShopRoute: ShopRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
