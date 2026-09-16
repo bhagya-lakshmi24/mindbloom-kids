@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_content: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          icon_key: string
+          id: string
+          is_active: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description: string
+          icon_key?: string
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          icon_key?: string
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       activity_logs: {
         Row: {
           activity_key: string
